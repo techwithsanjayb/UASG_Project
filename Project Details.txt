@@ -1,1 +1,1 @@
-This is UASG Project
+This document contains details about UASG project .
