@@ -104,4 +104,4 @@ def register(request):
         context = {
             'form': form
         }
-        return render(request, 'User/register.html')
+        return render(request, 'User/register.html',context)

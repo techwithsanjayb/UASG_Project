@@ -3,20 +3,11 @@
 
 {% block 'register' %}
 <div class="container-fluid register-main">
-          
   <div class="text-center p-3">
     <input type="text" class="text-center rounded-5 register-heading" value="Register" disabled />
   </div>
     <div class="row">
-        {% comment %} <div class="col-md-6">
-          <img class="img-fluid" src="{% static './Localisation_App/img/registeration.png' %}" alt="..." />
-
-        </div> {% endcomment %}
-
         <div class=" col-sm-12 col-md-5 col-lg-6 register-form-main">  
-          {% comment %} <div class="register-user-icon">
-            <img class="img-fluid" src="{% static './Localisation_App/img/Register-icon-1.png' %}" alt="..." />
-          </div> {% endcomment %}
         <form class="register-form" action={% url 'User:register' %}  method="POST" enctype="multipart/form-data" autocomplete="off">
             {% csrf_token %}
             <div class="row">
