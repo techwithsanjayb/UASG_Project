@@ -24,7 +24,7 @@
           <li><a href="{% url 'User:register'%}">Register</a></li>
           <li><a href="{% url 'User:login'%}">Login</a></li>
           {% else %}
-          <li>Logout</li>
+          <li><a href="{% url 'User:logout'%}">Logout</a></li>
           {% endif %}
         </ul>
       </nav>
@@ -34,6 +34,7 @@
     
     {% block 'login' %} {% endblock %}
     {% block 'register' %} {% endblock %}
+    {% block 'logout' %} {% endblock %}
     {% block 'discussionforum' %}
     {% endblock %}
   </body>
