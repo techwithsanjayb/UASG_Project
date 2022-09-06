@@ -15,7 +15,7 @@ import traceback
 from django.conf import settings
 from django.views.decorators.cache import cache_control
 from .models import UserRegistration
-
+from .form import UserLoginForm
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 # /^[a-zA-Z0-9.!#$%&’*+/=?^`{|}~-]+@([a-zA-Z0-9-]+[.]){1,2}[a-zA-Z]{2,10}$/
 def isValid(email):
@@ -62,19 +62,23 @@ def index(request):
 
 def login(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
+        print('inside post')
+        # form = AuthenticationForm(request=request, data=request.POST)
+        form = UserLoginForm(request.POST)
         if form.is_valid():
             uname = form.cleaned_data['username']
-            upass = form.cleaned_data['password']
+            upass = encrypt(form.cleaned_data['password'])
+            print("username ",uname)
+            print("password ",upass)
             user = authenticate(username=uname, password=upass)
             print(user)
             if user is not None:
-              return redirect('register')
+              return redirect('User:register')
         else:
             return render(request, 'User/login.html',{'form':form})
     else:    
-        form = AuthenticationForm()
-        return render(request, 'User/login.html',{'form':form})
+        form = UserLoginForm()
+    return render(request, 'User/login.html',{'form':form})    
 
 
 def register(request):

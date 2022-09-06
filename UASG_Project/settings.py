@@ -90,8 +90,8 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'tanvi',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PASSWORD': 'manager',
-        'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
+        # 'PASSWORD': 'd@t@b@se',
+        # 'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
