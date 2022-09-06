@@ -137,7 +137,7 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_QUERY_EMAIL = True
 # ACCOUNT_EMAIL_REQUIRED = True
 LOGIN_REDIRECT_URL = "/"
-
+LOGIN_URL = 'User:login'
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
     'google': {

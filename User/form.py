@@ -54,13 +54,13 @@ class UserLoginForm(forms.Form):
         super(UserLoginForm, self).__init__(*args, **kwargs)
 
     username = forms.EmailField(validators=[validators.EmailValidator(), validators.MaxLengthValidator(
-        50)], widget=forms.EmailInput(attrs={'class': 'form-control input-1', 'placeholder': 'Enter Email','autocomplete':'off'}), required=True)
+        50)], widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter Email','autocomplete':'off'}), required=True)
         
     password = forms.CharField(
         required=True,
         widget=forms.PasswordInput(
             attrs={
-                'class': 'form-control input-1',
+                'class': 'form-control',
                 'placeholder': 'Password',
                 'autocomplete':'off',
                

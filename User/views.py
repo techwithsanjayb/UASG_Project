@@ -1,8 +1,7 @@
 from django.shortcuts import HttpResponse
 from urllib import response
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from .form import UserRegisterForm
@@ -16,6 +15,7 @@ from django.conf import settings
 from django.views.decorators.cache import cache_control
 from .models import UserRegistration
 from .form import UserLoginForm
+from django.contrib.auth.models import User
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 # /^[a-zA-Z0-9.!#$%&’*+/=?^`{|}~-]+@([a-zA-Z0-9-]+[.]){1,2}[a-zA-Z]{2,10}$/
 def isValid(email):
@@ -67,13 +67,20 @@ def login(request):
         form = UserLoginForm(request.POST)
         if form.is_valid():
             uname = form.cleaned_data['username']
-            upass = encrypt(form.cleaned_data['password'])
+            upass = form.cleaned_data['password']
             print("username ",uname)
             print("password ",upass)
-            user = authenticate(username=uname, password=upass)
-            print(user)
-            if user is not None:
-              return redirect('User:register')
+            # user = User(username = uname)
+            # user = authenticate(username=uname, password=upass)
+            UserRegister=UserRegistration.objects.get(userregistration_email_field=uname)
+            print("get user",UserRegister)
+            if decrypt(UserRegister.userregistration_password) == upass:
+                user = User.objects.get(username=uname)
+                print("user authenticated")
+                auth_login(request, user)
+                return redirect('home')
+            
+        
         else:
             return render(request, 'User/login.html',{'form':form})
     else:    
@@ -94,15 +101,14 @@ def register(request):
                 encryptpass= encrypt(form.cleaned_data.get('password1'))
                 encryptconfirmpass= encrypt(form.cleaned_data.get('password2'))
                 email = form.cleaned_data.get('username').lower()
-                print("pass1",form.cleaned_data.get('password1'))
-                print("pass2",form.cleaned_data.get('password2'))
-                print('encryptpass',encryptpass)
                 data=User(username=email, password=encryptpass)
-                print("encrregpass",encryptpass)
+                # data.set_password(encrypt(form.cleaned_data.get('password2')))
+                # print("setpassword",data.set_password(encrypt(form.cleaned_data.get('password2'))))
                 data.save()
-                print("Form Data")
+                print("userpassword",data.password)
                 createdresult=UserRegistration.objects.create(userregistration_email_field=email, userregistration_password=encryptpass, userregistration_confirm_password=encryptconfirmpass, registration_User_Type=form.cleaned_data.get('user_role'))
                 if createdresult != '' or createdresult!= None:
+                    print("userregitrationpassword",createdresult.userregistration_password)
                     print("user created")
                     return redirect('User:index')
                 else:
