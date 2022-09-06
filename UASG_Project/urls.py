@@ -25,4 +25,5 @@ urlpatterns = [
     path('applicationshowcase/', include('Application_Showcase.urls')),
     path('helpdesk/', include('Helpdesk.urls')),
     path('user/', include('User.urls')),
+    path('accounts/', include('allauth.urls'))
 ]
