@@ -18,15 +18,37 @@
           <li><a href="{% url 'home'%}">Home</a></li>
           <li><a href="{% url 'User:register'%}">Register</a></li>
           <li><a href="{% url 'User:login'%}">Login</a></li>
+          {{ user.is_authenticated }}
+
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'User:uploaddocument'%}">Upload Document</a></li>
+          {% endif %}
+
+          <li><a href="{% url 'viewdocuments'%}">View Document</a></li>
         </ul>
       </nav>
     </header>
 
     {% block 'home' %} {% endblock %}
     
-    {% block 'login' %} {% endblock %}
-    {% block 'register' %} {% endblock %}
+    {% block 'login' %} 
+
+    {% endblock %}
+
+    {% block 'register' %} 
+
+    {% endblock %}
+
     {% block 'discussionforum' %}
+
+    {% endblock %}
+
+    {% block documenthub %}
+
+    {% endblock %}
+
+    {% block viewdocument %}
+
     {% endblock %}
   </body>
 </html>

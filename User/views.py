@@ -12,6 +12,7 @@ import traceback
 from django.conf import settings
 from django.views.decorators.cache import cache_control
 from .models import UserRegistration
+from django.contrib.auth.hashers import make_password
 
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 # /^[a-zA-Z0-9.!#$%&’*+/=?^`{|}~-]+@([a-zA-Z0-9-]+[.]){1,2}[a-zA-Z]{2,10}$/
@@ -73,12 +74,14 @@ def register(request):
             if emailstatus != 'Invalidemail':
                 encryptpass= encrypt(form.cleaned_data.get('password1'))
                 encryptconfirmpass= encrypt(form.cleaned_data.get('password2'))
+                # encryptconfirmpass=make_password(validated_data[encrypt(form.cleaned_data.get('password2'))])
                 email = form.cleaned_data.get('username').lower()
                 print("pass1",form.cleaned_data.get('password1'))
                 print("pass2",form.cleaned_data.get('password2'))
                 print('encryptpass',encryptpass)
                 data=User(username=email, password=encryptpass)
                 print("encrregpass",encryptpass)
+                data.set_password(encrypt(form.cleaned_data.get('password2')))
                 data.save()
                 print("Form Data")
                 createdresult=UserRegistration.objects.create(userregistration_email_field=email, userregistration_password=encryptpass, userregistration_confirm_password=encryptconfirmpass, registration_User_Type=form.cleaned_data.get('user_role'))
@@ -105,3 +108,11 @@ def register(request):
             'form': form
         }
         return render(request, 'User/register.html',context)
+
+
+def uploaddocument(reuqest):
+    print("user",reuqest.user.is_authenticated)
+    if reuqest.user.is_authenticated:
+        return render(reuqest,'User/uploaddocument.html')
+    else:
+        return render(reuqest,'User/login.html')
