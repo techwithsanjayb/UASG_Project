@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+ENCRYPT_KEY = b'tmzHcYuvLUhxjcxZ4k_iqfCx-HUq6PCvdbXr4vOC5B4='
 # Application definition
 
 INSTALLED_APPS = [
@@ -90,6 +90,8 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'tanvi',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PASSWORD': 'manager',
+        'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
