@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'uasg_db',
         'USER': 'root',
         'PASSWORD': 'manager',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
