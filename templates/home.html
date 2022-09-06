@@ -1,5 +1,8 @@
 {% extends 'base.html' %} {% block 'home' %}
 <h2>Welcome To UASG Portal</h2>
+{% if user.is_authenticated %}
+        <p>welcome, {{ user.username }}</p>
+{% endif %}
 <p>
   Universal Acceptance is a foundational requirement for a truly multilingual
   Internet, one in which users around the world can navigate entirely in local

@@ -29,4 +29,5 @@ urlpatterns = [
 
 
     path('viewdocuments', views.viewdocuments, name='viewdocuments'),
+    path('accounts/', include('allauth.urls'))
 ]

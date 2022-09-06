@@ -1,5 +1,7 @@
 from django.shortcuts import HttpResponse
 from urllib import response
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from .form import UserRegisterForm
@@ -12,8 +14,8 @@ import traceback
 from django.conf import settings
 from django.views.decorators.cache import cache_control
 from .models import UserRegistration
-from django.contrib.auth.hashers import make_password
-
+from .form import UserLoginForm
+from django.contrib.auth.models import User
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 # /^[a-zA-Z0-9.!#$%&’*+/=?^`{|}~-]+@([a-zA-Z0-9-]+[.]){1,2}[a-zA-Z]{2,10}$/
 def isValid(email):
@@ -59,7 +61,31 @@ def index(request):
     return HttpResponse("User")
 
 def login(request):
-    return render(request, 'User/login.html')
+    if request.method == 'POST':
+        print('inside post')
+        # form = AuthenticationForm(request=request, data=request.POST)
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            uname = form.cleaned_data['username']
+            upass = form.cleaned_data['password']
+            print("username ",uname)
+            print("password ",upass)
+            # user = User(username = uname)
+            # user = authenticate(username=uname, password=upass)
+            UserRegister=UserRegistration.objects.get(userregistration_email_field=uname)
+            print("get user",UserRegister)
+            if decrypt(UserRegister.userregistration_password) == upass:
+                user = User.objects.get(username=uname)
+                print("user authenticated")
+                auth_login(request, user)
+                return redirect('home')
+            
+        
+        else:
+            return render(request, 'User/login.html',{'form':form})
+    else:    
+        form = UserLoginForm()
+    return render(request, 'User/login.html',{'form':form})    
 
 
 def register(request):
@@ -74,18 +100,15 @@ def register(request):
             if emailstatus != 'Invalidemail':
                 encryptpass= encrypt(form.cleaned_data.get('password1'))
                 encryptconfirmpass= encrypt(form.cleaned_data.get('password2'))
-                # encryptconfirmpass=make_password(validated_data[encrypt(form.cleaned_data.get('password2'))])
                 email = form.cleaned_data.get('username').lower()
-                print("pass1",form.cleaned_data.get('password1'))
-                print("pass2",form.cleaned_data.get('password2'))
-                print('encryptpass',encryptpass)
                 data=User(username=email, password=encryptpass)
-                print("encrregpass",encryptpass)
-                data.set_password(encrypt(form.cleaned_data.get('password2')))
+                # data.set_password(encrypt(form.cleaned_data.get('password2')))
+                # print("setpassword",data.set_password(encrypt(form.cleaned_data.get('password2'))))
                 data.save()
-                print("Form Data")
+                print("userpassword",data.password)
                 createdresult=UserRegistration.objects.create(userregistration_email_field=email, userregistration_password=encryptpass, userregistration_confirm_password=encryptconfirmpass, registration_User_Type=form.cleaned_data.get('user_role'))
                 if createdresult != '' or createdresult!= None:
+                    print("userregitrationpassword",createdresult.userregistration_password)
                     print("user created")
                     return redirect('User:index')
                 else:
@@ -110,9 +133,13 @@ def register(request):
         return render(request, 'User/register.html',context)
 
 
-def uploaddocument(reuqest):
-    print("user",reuqest.user.is_authenticated)
-    if reuqest.user.is_authenticated:
-        return render(reuqest,'User/uploaddocument.html')
+def logout(request):
+    auth_logout(request)
+    return render(request, 'home.html')
+
+
+def documenthub(request):
+    if request.user.is_authenticated:
+        return render(request, 'User/documenthub.html')
     else:
-        return render(reuqest,'User/login.html')
+        return render(request, 'User/login.html')

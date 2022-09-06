@@ -3,6 +3,10 @@
 <html lang="en">
   <head>
     <title>UASG</title>
+    <script type="text/javascript">
+      window.history.forward();
+      function noBack() { window.history.forward(); }
+    </script>
     <!-- CSS only -->
     <!-- Bootstrap Source Minified File -->
    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
@@ -11,20 +15,24 @@
 
     <link rel="stylesheet" href="{% static 'base.css' %}" />
   </head>
-  <body>
+  <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
     <header>
       <nav class="navbar">
         <ul>
           <li><a href="{% url 'home'%}">Home</a></li>
+          {% if not user.is_authenticated %}
           <li><a href="{% url 'User:register'%}">Register</a></li>
           <li><a href="{% url 'User:login'%}">Login</a></li>
           {{ user.is_authenticated }}
 
           {% if user.is_authenticated %}
-          <li><a href="{% url 'User:uploaddocument'%}">Upload Document</a></li>
-          {% endif %}
+          <li><a href="{% url 'User:documenthub'%}">Upload Document</a></li>
+          {% endif %} 
 
           <li><a href="{% url 'viewdocuments'%}">View Document</a></li>
+          {% else %}
+          <li>Logout</li>
+          {% endif %}
         </ul>
       </nav>
     </header>
