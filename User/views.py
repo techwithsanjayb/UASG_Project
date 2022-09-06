@@ -141,3 +141,11 @@ def register(request):
 def logout(request):
     auth_logout(request)
     return render(request, 'home.html')
+
+
+
+def documenthub(request):
+    if request.user.is_authenticated:
+        return render(request, 'User/documenthub.html')
+    else:
+        return render(request, 'User/login.html')
