@@ -88,8 +88,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'uasg_db',
         'USER': 'root',
-        'PASSWORD': 'd@t@b@se',
-        'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
+        'PASSWORD': 'Cent0$8db',
+        'HOST': '10.208.10.205',   # Or an IP Address that your DB is hosted on
         # 'PASSWORD': 'd@t@b@se',
         # 'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
