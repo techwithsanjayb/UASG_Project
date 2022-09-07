@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'Application_Showcase',
     'Discussion_Forum',
     'Helpdesk',
@@ -76,6 +77,11 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 print("settingsbase",BASE_DIR)
 WSGI_APPLICATION = 'UASG_Project.wsgi.application'
 
@@ -88,8 +94,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'uasg_db',
         'USER': 'root',
-        'PASSWORD': 'Cent0$8db',
-        'HOST': '10.208.10.205',   # Or an IP Address that your DB is hosted on
+        'PASSWORD': 'tanvi',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         # 'PASSWORD': 'd@t@b@se',
         # 'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
