@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.linkedin_oauth2',
     'allauth.socialaccount.providers.github',
+    'ajax_datatable',
 ]
 
 MIDDLEWARE = [
@@ -88,8 +89,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'uasg_db',
         'USER': 'root',
-        'PASSWORD': 'manager',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PASSWORD': 'Cent0$8db',
+        'HOST': 'tdil-db.pune.cdac.in',   # Or an IP Address that your DB is hosted on
         # 'PASSWORD': 'd@t@b@se',
         # 'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',

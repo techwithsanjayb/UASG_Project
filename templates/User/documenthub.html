@@ -2,7 +2,22 @@
 {% load static %}
 {% block documenthub %}
 
-upload form from private space
+<form class="site-form" action="{% url 'User:documenthub' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container">
+    {% if form.non_field_errors%}
+        {% for error in form.non_field_errors %}
+        <div>{{error}}</div>
+        {% endfor %}
+    {% endif %}
+   
+      <div class="card text-center p-2">
+      {{ form }}
+
+      </div>
+      <div><button type="submit" class="btn btn-primary btn-sm mb-2">Submit</button></div>
+    </div>
+</form>
 
 
 

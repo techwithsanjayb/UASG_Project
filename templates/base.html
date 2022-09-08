@@ -9,45 +9,59 @@
     </script>
     <!-- CSS only -->
     <!-- Bootstrap Source Minified File -->
-   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
-   
-   {% comment %} <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>  {% endcomment %}
+    <script src="{% static 'js/jquery-3.5.1.js' %}"></script>
+    <script src="{% static 'js/datatables.js' %}"></script>
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap5.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/> 
+    <link rel="stylesheet" href="{% static 'css/bootstrapdatatable.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap5.min.css' %}"/>
+    <link href="{% static 'css/bootstrap.min.css.map' %}"/>
+
+
+    {% comment %} <script src="https://code.jquery.com/jquery-3.5.1.js"></script> {% endcomment %}
+    {% comment %} <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"> {% endcomment %}
+    {% comment %} <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>  {% endcomment %}
+    {% comment %} <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>  {% endcomment %}
 
     <link rel="stylesheet" href="{% static 'base.css' %}" />
   </head>
-  <body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
+  <body>
     <header>
       <nav class="navbar">
         <ul>
           <li><a href="{% url 'home'%}">Home</a></li>
-          {% if not user.is_authenticated %}
-          <li><a href="{% url 'User:register'%}">Register</a></li>
-          <li><a href="{% url 'User:login'%}">Login</a></li>
           {{ user.is_authenticated }}
 
           {% if user.is_authenticated %}
           <li><a href="{% url 'User:documenthub'%}">Upload Document</a></li>
+          {% comment %} <li><a href="{% url 'User:logout'%}">Logout</a></li> {% endcomment %}
+          {% else %}
+          <li><a href="{% url 'User:register'%}">Register</a></li>
+          <li><a href="{% url 'User:login'%}">Login</a></li>
           {% endif %} 
 
           <li><a href="{% url 'viewdocuments'%}">View Document</a></li>
-          {% else %}
-          <li>Logout</li>
-          {% endif %}
+        
+         
+        
         </ul>
       </nav>
     </header>
 
-    {% block 'home' %} {% endblock %}
+    {% block home %} {% endblock %}
     
-    {% block 'login' %} 
+    {% block login %} 
 
     {% endblock %}
 
-    {% block 'register' %} 
+    {% block register %} 
 
     {% endblock %}
 
-    {% block 'discussionforum' %}
+    {% block discussionforum %}
 
     {% endblock %}
 
@@ -55,8 +69,29 @@
 
     {% endblock %}
 
-    {% block viewdocument %}
+    {% block documenthubview %}
 
     {% endblock %}
+
+
+    {% block datatable %}
+
+    {% endblock %}
+
+
+    {% comment %} <script>
+      $(document).ready(function () {
+        $('#example').DataTable(
+            {
+                
+                ordering:true,
+                scrollY:'200px',
+                scrollCollapse:true,
+                order:[[3,'desc']],
+                
+            }
+        );
+    });
+    </script>  {% endcomment %}
   </body>
 </html>

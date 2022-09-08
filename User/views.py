@@ -14,8 +14,10 @@ import traceback
 from django.conf import settings
 from django.views.decorators.cache import cache_control
 from .models import UserRegistration
-from .form import UserLoginForm
+from .form import UserLoginForm,uploadDocumentForm
 from django.contrib.auth.models import User
+from django.contrib import messages
+
 regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 # /^[a-zA-Z0-9.!#$%&’*+/=?^`{|}~-]+@([a-zA-Z0-9-]+[.]){1,2}[a-zA-Z]{2,10}$/
 def isValid(email):
@@ -51,9 +53,9 @@ def decrypt(pas):
         logging.getLogger("error_logger").error(traceback.format_exc())
         return None
 
-# Create your views here.
-def index(request):
-    return HttpResponse("User Registered")
+# # Create your views here.
+# def index(request):
+#     return HttpResponse("User Registered")
 
 
 # Create your views here.
@@ -63,15 +65,12 @@ def index(request):
 def login(request):
     if request.method == 'POST':
         print('inside post')
-        # form = AuthenticationForm(request=request, data=request.POST)
         form = UserLoginForm(request.POST)
         if form.is_valid():
             uname = form.cleaned_data['username']
             upass = form.cleaned_data['password']
             print("username ",uname)
             print("password ",upass)
-            # user = User(username = uname)
-            # user = authenticate(username=uname, password=upass)
             UserRegister=UserRegistration.objects.get(userregistration_email_field=uname)
             print("get user",UserRegister)
             if decrypt(UserRegister.userregistration_password) == upass:
@@ -79,8 +78,6 @@ def login(request):
                 print("user authenticated")
                 auth_login(request, user)
                 return redirect('home')
-            
-        
         else:
             return render(request, 'User/login.html',{'form':form})
     else:    
@@ -102,8 +99,6 @@ def register(request):
                 encryptconfirmpass= encrypt(form.cleaned_data.get('password2'))
                 email = form.cleaned_data.get('username').lower()
                 data=User(username=email, password=encryptpass)
-                # data.set_password(encrypt(form.cleaned_data.get('password2')))
-                # print("setpassword",data.set_password(encrypt(form.cleaned_data.get('password2'))))
                 data.save()
                 print("userpassword",data.password)
                 createdresult=UserRegistration.objects.create(userregistration_email_field=email, userregistration_password=encryptpass, userregistration_confirm_password=encryptconfirmpass, registration_User_Type=form.cleaned_data.get('user_role'))
@@ -113,8 +108,7 @@ def register(request):
                     return redirect('User:index')
                 else:
                     print("User not created")
-                    return redirect('User:register')
-                    
+                    return redirect('User:register') 
             else:
                 print("invalid")
                 return redirect('User:register')
@@ -140,6 +134,32 @@ def logout(request):
 
 def documenthub(request):
     if request.user.is_authenticated:
-        return render(request, 'User/documenthub.html')
+        if request.method == 'POST':
+            print()
+            form = uploadDocumentForm(request.POST, request.FILES)
+            if form.is_valid():
+                print("form is valid")
+                form.save()
+                messages.success(request, ('Your form is saved!'))
+                return redirect('User:documenthub')
+            else:
+                print("form is not valid")
+                context={
+                    'form':form
+                }
+                messages.error(request, ('Your form is not saved!'))
+                return render(request, 'User/documenthub.html',context)
+        else:
+            form=uploadDocumentForm()
+            context={
+                'form':form
+            }
+            return render(request, 'User/documenthub.html',context)
     else:
         return render(request, 'User/login.html')
+
+
+
+def datatable(request):
+    print('datatable')
+    return render(request,'datatable.html')
