@@ -96,8 +96,9 @@ def login(request):
 
 def register(request):
     form = UserRegisterForm()
+    print("form",form)
     if request.method == 'POST':
-        print("inside registeration")
+        print("inside post registeration")
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             print("form is valid")
@@ -162,7 +163,7 @@ def documenthub(request):
         else:
             form=uploadDocumentForm()
             context={
-                'form':form
+                 'form':form
             }
             return render(request, 'User/documenthub.html',context)
     else:

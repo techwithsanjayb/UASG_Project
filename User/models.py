@@ -69,6 +69,7 @@ class DocumentHubData(models.Model):
     DocumentHubData_Languages =  models.ForeignKey(
         DocumentHub_Languages, on_delete=models.CASCADE)
     DocumentHubData_Author = models.CharField(max_length=100)
+    DocumentHubData_Author2 = models.CharField(max_length=100)
 
 
     class Meta:

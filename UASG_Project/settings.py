@@ -95,8 +95,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'uasg_db',
         'USER': 'root',
-        'PASSWORD': 'Cent0$8db',
-        'HOST': 'tdil-db.pune.cdac.in',   # Or an IP Address that your DB is hosted on
+        'PASSWORD': 'manager',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         # 'PASSWORD': 'd@t@b@se',
         # 'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
