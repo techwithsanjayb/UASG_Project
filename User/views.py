@@ -71,13 +71,22 @@ def login(request):
             upass = form.cleaned_data['password']
             print("username ",uname)
             print("password ",upass)
-            UserRegister=UserRegistration.objects.get(userregistration_email_field=uname)
-            print("get user",UserRegister)
-            if decrypt(UserRegister.userregistration_password) == upass:
-                user = User.objects.get(username=uname)
-                print("user authenticated")
-                auth_login(request, user)
-                return redirect('home')
+            # user = User(username = uname)
+            # user = authenticate(username=uname, password=upass)
+            try:
+                UserRegister=UserRegistration.objects.get(userregistration_email_field=uname)
+                print("get user",UserRegister)
+                if decrypt(UserRegister.userregistration_password) == upass:
+                    user = User.objects.get(username=uname)
+                    print("user authenticated")
+                    auth_login(request, user)
+                    return redirect('home')
+                else:
+                    error="Incorrect Password"
+                    return render(request, 'User/login.html',{'form':form, "error":error})
+            except:
+                    error="Incorrect Email"
+                    return render(request, 'User/login.html',{'form':form, "error":error})
         else:
             return render(request, 'User/login.html',{'form':form})
     else:    
@@ -130,6 +139,7 @@ def register(request):
 def logout(request):
     auth_logout(request)
     return render(request, 'home.html')
+
 
 
 def documenthub(request):

@@ -33,22 +33,27 @@
       <nav class="navbar">
         <ul>
           <li><a href="{% url 'home'%}">Home</a></li>
+          <li><a href="{% url 'viewdocuments'%}">View Document</a></li>
+          
           {{ user.is_authenticated }}
 
           {% if user.is_authenticated %}
           <li><a href="{% url 'User:documenthub'%}">Upload Document</a></li>
-          {% comment %} <li><a href="{% url 'User:logout'%}">Logout</a></li> {% endcomment %}
+          <li><a href="{% url 'User:logout'%}">Logout</a></li> 
           {% else %}
           <li><a href="{% url 'User:register'%}">Register</a></li>
           <li><a href="{% url 'User:login'%}">Login</a></li>
-          {% endif %} 
+          {% endif %}
 
-          <li><a href="{% url 'viewdocuments'%}">View Document</a></li>
-        
          
-        
+       
         </ul>
       </nav>
+        <div>
+            {% if user.is_authenticated %}
+              <p>welcome, {{ user.username }}</p>
+            {% endif %}
+        </div>
     </header>
 
     {% block home %} {% endblock %}

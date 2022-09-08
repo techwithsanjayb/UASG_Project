@@ -37,18 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'Application_Showcase',
     'Discussion_Forum',
     'Helpdesk',
     'User',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.linkedin_oauth2',
-    'allauth.socialaccount.providers.github',
-    'ajax_datatable',
 ]
 
 MIDDLEWARE = [
@@ -78,11 +70,6 @@ TEMPLATES = [
         },
     },
 ]
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
 print("settingsbase",BASE_DIR)
 WSGI_APPLICATION = 'UASG_Project.wsgi.application'
 
@@ -95,10 +82,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'uasg_db',
         'USER': 'root',
-        'PASSWORD': 'Cent0$8db',
-        'HOST': 'tdil-db.pune.cdac.in',   # Or an IP Address that your DB is hosted on
-        # 'PASSWORD': 'd@t@b@se',
-        # 'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
+        'PASSWORD': 'd@t@b@se',
+        'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
@@ -137,81 +122,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-SITE_ID = 2
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_VERIFICATION = "none"
-SOCIALACCOUNT_QUERY_EMAIL = True
-ACCOUNT_EMAIL_REQUIRED = True
-LOGIN_REDIRECT_URL = "/"
-# LOGOUT_REDIRECT_URL = "User:logout"
-LOGIN_URL = 'User:login'
-# Provider specific settings
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': '910561070965-aok45rslnkaverhie0gsshevnnrt75p0.apps.googleusercontent.com',
-            'secret': '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',
-            'key': ''
-        }
-    },
-    # 'facebook':
-    #     {
-    #      'METHOD': 'oauth2',
-    #      'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
-    #      'SCOPE': ['email', 'public_profile'],
-    #      'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-    #      'INIT_PARAMS': {'cookie': True},
-    #      'FIELDS': [
-    #          'id',
-    #          'first_name',
-    #          'last_name',
-    #          'name',
-    #          'name_format',
-    #          'picture',
-    #          'short_name'
-    #      ],
-    #      'EXCHANGE_TOKEN': True,
-    #      'LOCALE_FUNC': lambda request: 'ru_RU',
-    #      'VERIFIED_EMAIL': False,
-    #      'VERSION': 'v7.0',
-    #      # you should fill in 'APP' only if you don't create a Facebook instance at /admin/socialaccount/socialapp/
-    #      'APP': {
-    #          'client_id': '483350450324711',  # !!! THIS App ID
-    #          'secret': 'fc52797b85a770bd32b4c3cba77b3de2',  # !!! THIS App Secret
-    #          'key': ''
-    #             }
-    #      }
-     'linkedin': {
-        'SCOPE': [
-            'r_basicprofile',
-            'r_emailaddress'
-        ],
-        'PROFILE_FIELDS': [
-            'id',
-            'first-name',
-            'last-name',
-            'email-address',
-            'picture-url',
-            'public-profile-url',
-        ]
-    },
-    'github': {
-        'SCOPE': [
-            'user',
-            'repo',
-            'read:org',
-        ],
-        'PROFILE_FIELDS': [
-            'id',
-            'first-name',
-            'last-name',
-            'email-address',
-            'picture-url',
-            'public-profile-url',
-        ]
-    }
-}
 
 
 # Static files (CSS, JavaScript, Images)

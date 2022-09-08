@@ -8,11 +8,11 @@
 <form class="site-form" action="{% url 'User:login' %}" method="POST">
     {% csrf_token %}
     <div class="container">
-    {% if form.non_field_errors%}
+    {% comment %} {% if form.non_field_errors%}
         {% for error in form.non_field_errors %}
         <div>{{error}}</div>
         {% endfor %}
-    {% endif %}
+    {% endif %} {% endcomment %}
     {% comment %} <ul class="errorlist nonfield"></ul> {% endcomment %}
     {% comment %} <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -22,6 +22,9 @@
         <label for="exampleInputPassword1" class="form-label">Password</label>
         {{form.password}}
       </div> {% endcomment %}
+      {% if error %}
+      <div>{{error}}</div>
+      {% endif %}
       <div class="card text-center p-2">
       {% for fm in form %}
       <div>{{fm.label_tag}} {{fm}} {{fm.errors|striptags}}</div></br>
