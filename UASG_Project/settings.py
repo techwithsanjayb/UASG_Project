@@ -89,22 +89,20 @@ WSGI_APPLICATION = 'UASG_Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'uasg_db',
+        'NAME': 'test_uasg_db',
         'USER': 'root',
         'PASSWORD': 'tanvi',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        # 'PASSWORD': 'd@t@b@se',
-        # 'HOST': '10.208.10.193',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
             'charset': 'utf8mb4'
         }
     },
-
 }
 
 # Password validation
@@ -137,13 +135,35 @@ USE_I18N = True
 
 USE_TZ = True
 
-SITE_ID = 2
-ACCOUNT_USERNAME_REQUIRED = False
+SITE_ID = 4
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+# SOCIALACCOUNT_AUTO_SIGNUP = True
+# ACCOUNT_USERNAME_REQUIRED = True
+# ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+# SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_QUERY_EMAIL = True
-ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_UNIQUE_EMAIL = False
+
+# SOCIALACCOUNT_QUERY_USERNMAE = True
+# ACCOUNT_UNIQUE_EMAIL = False
+# ACCOUNT_EMAIL_REQUIRED = False
+
+# SOCIALACCOUNT_AUTO_SIGNUP = True
+# # ACCOUNT_USERNAME_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = "none"
+# ACCOUNT_UNIQUE_EMAIL = False
+# SOCIALACCOUNT_QUERY_EMAIL = True
+# SOCIALACCOUNT_QUERY_USERNMAE = True
+
+#
+# ACCOUNT_EMAIL_REQUIRED = True
+
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "User:logout"
+# LOGOUT_REDIRECT_URL = "User:logout"
 LOGIN_URL = 'User:login'
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {

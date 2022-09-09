@@ -140,7 +140,7 @@ def register(request):
 
 def logout(request):
     auth_logout(request)
-    return render(request, 'home.html')
+    return redirect('home')
 
 
 
