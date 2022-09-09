@@ -96,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'test_uasg_db',
         'USER': 'root',
-        'PASSWORD': 'manager',
+        'PASSWORD': 'tanvi',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'OPTIONS': {
@@ -148,7 +148,7 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_QUERY_EMAIL = True
 # ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_UNIQUE_EMAIL = False
-
+SOCIALACCOUNT_LOGIN_ON_GET = True
 # SOCIALACCOUNT_QUERY_USERNMAE = True
 # ACCOUNT_UNIQUE_EMAIL = False
 # ACCOUNT_EMAIL_REQUIRED = False
