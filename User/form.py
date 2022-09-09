@@ -1,11 +1,13 @@
 from dataclasses import fields
 from logging import PlaceHolder
+from pyexpat import model
 from tkinter import Widget
 from xml.dom import ValidationErr
 from django import forms
 from django.core import validators
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import DocumentHubData
 
 
 
@@ -67,3 +69,11 @@ class UserLoginForm(forms.Form):
 
             }
         ))
+
+
+class uploadDocumentForm(forms.ModelForm):
+    class Meta:
+        model = DocumentHubData
+        fields = ('DocumentHubData_Title', 'DocumentHubData_CategoryType', 'DocumentHubData_FileSize','DocumentHubData_Tags', 'DocumentHubData_UploadSupportDocument', 'DocumentHubData_DownloadCounter','DocumentHubData_PublishedStatus','DocumentHubData_Languages','DocumentHubData_Author')
+
+

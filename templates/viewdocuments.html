@@ -1,8 +1,33 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block viewdocument %}
+{% block documenthubview %}
 
-Document listing
+
+
+
+
+{% for data in DocumentHub_Data %}
+      
+
+       <p>{{ data.DocumentHubData_Title }}</p>
+       <p>{{ data.DocumentHubData_CategoryType }}</p>
+       <p>{{ data.DocumentHubData_Tags }}</p>
+       <p>{{ data.DocumentHubData_PublishedDate }}</p>
+       <p>{{ data.DocumentHubData_CreationDate }}</p>
+       <p>{{ data.DocumentHubData_FileSize }}</p>
+       <p>{{ data.DocumentHubData_LastUpdatedDate }}</p>
+       <p>{{ data.DocumentHubData_UploadSupportDocument }}</p>
+       {% if data.DocumentHubData_UploadSupportDocument != '' %}
+         <a href="/media/{{data.DocumentHubData_UploadSupportDocument}}" download >Download</a>
+        {% endif %}
+       <p>{{ data.DocumentHubData_DownloadCounter }}</p>
+       <p>{{ data.DocumentHubData_PublishedStatus }}</p>
+       <p>{{ data.DocumentHubData_Languages }}</p>
+       <p>{{ data.DocumentHubData_Author }}</p>
+
+
+{% endfor %}
+
 
 
 

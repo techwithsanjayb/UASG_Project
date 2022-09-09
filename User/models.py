@@ -22,3 +22,62 @@ class UserRegistration(models.Model):
 
     def __str__(self):
         return self.userregistration_email_field
+
+
+
+class DocumentHub_Category(models.Model):
+    DocumentHub_CategoryType = models.CharField(max_length=100)
+    DocumentHub_Cat_Status = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "Document Hub Category"
+        ordering = ['DocumentHub_CategoryType']
+
+    def __str__(self):
+        return self.DocumentHub_CategoryType
+
+class DocumentHub_Languages(models.Model):
+    DocumentHub_LanguagesType = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name_plural = "DocumentHub LanguagesType"
+        ordering = ['DocumentHub_LanguagesType']
+
+    def __str__(self):
+        return self.DocumentHub_LanguagesType
+
+
+class DocumentHubData(models.Model):
+    DocumentHubData_Title = models.CharField(max_length=100)
+    DocumentHubData_CategoryType = models.ForeignKey(
+        DocumentHub_Category, on_delete=models.CASCADE)
+    DocumentHubData_Tags = models.SlugField()
+    DocumentHubData_PublishedDate = models.DateTimeField(
+        auto_now_add=True,  blank=True)
+    DocumentHubData_CreationDate = models.DateTimeField(
+        auto_now_add=True,  blank=True, null=True)
+    DocumentHubData_FileSize = models.CharField(max_length=30)
+    DocumentHubData_LastUpdatedDate = models.DateTimeField(
+        auto_now=True, blank=True, null=True)
+    DocumentHubData_UploadSupportDocument = models.FileField(
+        upload_to="User/Documenthub")
+    DocumentHubData_DownloadCounter = models.IntegerField()
+    DocumentHubData_PublishedChoices = (
+        ('Published', 'PUBLISHED'), ('Unpublished', 'UNPUBLISHED'))
+    DocumentHubData_PublishedStatus = models.CharField(
+        max_length=20, choices=DocumentHubData_PublishedChoices, default="published")
+    DocumentHubData_Languages =  models.ForeignKey(
+        DocumentHub_Languages, on_delete=models.CASCADE)
+    DocumentHubData_Author = models.CharField(max_length=100)
+    DocumentHubData_Author2 = models.CharField(max_length=100)
+
+
+    class Meta:
+        verbose_name_plural = "Document Hub Data"
+        ordering = ['DocumentHubData_Title']
+
+    def __str__(self):
+        return self.DocumentHubData_Title
+
+    def get_DocumentHubData_slug_splited(self):
+        return self.DocumentHubData_Tags.split('-')
